@@ -4,11 +4,18 @@ on:
     branches:
       - main
 
+env:
+  ## Sets environment variable
+  OS: [ubuntu-latest]
+  REPOSITORY: blog-service
+  SERVICE: demo
+  TAG: ${{ github.sha }}
+
 jobs:
 
   sonarcloud:
     name: SonarCloud
-    runs-on: ubuntu-latest
+    runs-on: ${{env.OS}}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -20,13 +27,13 @@ jobs:
 
   docker-build:
     name: DockerBuildandImageScanning
-    runs-on: ubuntu-latest
+    runs-on: ${{env.OS}}
     needs: [SonarCloud]
     steps:
       - uses: actions/checkout@v3
       - name: Build an image from Dockerfile
         run: |
-          docker build . --file Dockerfile --tag blog-service/demo:v1
+          docker build . --file Dockerfile --tag ${{env.REPOSITORY}}/${{env.SERVICE}}:${{env.TAG}}
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
