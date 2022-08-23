@@ -39,3 +39,5 @@ jobs:
         with:
           go-version-file: './src/go.mod'
       - run: go version
+      - name: Test
+        run: go test -v ./...
