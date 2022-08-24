@@ -1,0 +1,23 @@
+name: blog-service
+on:
+  push:
+    branches:
+      - main
+
+env:
+  ## Sets environment variable
+  REPOSITORY: ${{ github.repository }}
+  SERVICE: demo
+  TAG: ${{ github.sha }}
+
+jobs:
+
+  docker-build:
+    name: DockerBuildandImageScanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build an image from Dockerfile for ${{ env.SERVICE }} microservices
+        run: |
+          docker build . --file Dockerfile --tag ${{ env.REPOSITORY }}:${{ env.TAG }}
+

@@ -93,3 +93,39 @@ This exercise will help you to understand the scope of the secrets of each types
 
 ## Discussion
 ...
+
+## Exercise 4 - Understanding Environment Variables and Default Environment Variables
+In the workflow we can define and use environment variables which can access via `${{ env.VARIABLE_NAME }}`. Also GitHub Action provide default environment variables, such as Repository name, Tag, SHA, and more. These variables can be access through the context using `${{ github.XXXX }}`
+
+See more about the complete list of the variables here [https://docs.github.com/en/actions/learn-github-actions/contexts#github-context](https://docs.github.com/en/actions/learn-github-actions/contexts#github-context)
+
+In this exercise we will use environment variable and default variables in our workflows
+
+- Create new workflow in `.github/workflows`
+```yaml
+name: blog-service
+on:
+  push:
+    branches:
+      - main
+
+env:
+  ## Sets environment variable
+  REPOSITORY: ${{ github.repository }}
+  SERVICE: demo
+  TAG: ${{ github.sha }}
+
+jobs:
+
+  docker-build:
+    name: DockerBuildandImageScanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build an image from Dockerfile for ${{ env.SERVICE }} microservices
+        run: |
+          docker build . --file Dockerfile --tag ${{ env.REPOSITORY }}:${{ env.TAG }}
+
+```
+
+- Commit and push the code, then go to GitHub UI to see how your workflow is running.
