@@ -1,0 +1,17 @@
+name: Test Scope workflow
+
+on: 
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    env: 
+      TOKEN: ${{ secrets.TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: validate 
+        run: python validate.py
