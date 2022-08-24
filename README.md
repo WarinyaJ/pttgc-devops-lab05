@@ -87,3 +87,6 @@ This exercise will help you to understand the scope of the secrets of each types
       - name: validate
         run: python validate.py
 ```
+
+## Discussion
+...
