@@ -87,6 +87,9 @@ This exercise will help you to understand the scope of the secrets of each types
       - name: validate
         run: python validate.py
 ```
+*NOTE Repository Secret will override Organization Secret*
+![Override](./assets/repo-override.PNG)
+
 
 ## Discussion
 ...
